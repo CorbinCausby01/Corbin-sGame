@@ -10,7 +10,7 @@ public class Dialogue : DialogueManger
   
   
 
-  public void NewSentences(string s)
+  public void NewSentences()
   {
     //AddSentenceToQueue(DialogueName.text = "Kai Cenat");
     //return Convert.ToString(AddSentenceToQueue(CharacterDialogue.text = "Hello World!"));

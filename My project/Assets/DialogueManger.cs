@@ -20,11 +20,8 @@ namespace DialogueManager
         void Start()
         {
             sentences = new Queue<string>();
+            FindObjectOfType<Dialogue>().NewSentences();
             
-            foreach(string obj in sentences)
-            {
-               FindObjectOfType<Dialogue>().NewSentences(obj);
-            }
             
         }
 
