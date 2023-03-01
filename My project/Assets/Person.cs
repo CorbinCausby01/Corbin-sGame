@@ -8,11 +8,11 @@ using DialogueManager;
 
 namespace Characters
 {
-    
+    [System.Serializable]
     public class Person : MonoBehaviour 
     {
 
-        public string name;
+        public string pname;
         public string bestMove;
         public int moveSlots;
         public int health;
@@ -25,26 +25,26 @@ namespace Characters
        
         public void dialogueSentence(string sentences)
         {
-            FindObjectOfType<DialogueManger>().AddSentenceToQueue();
+            //FindObjectOfType<DialogueManger>().AddSentenceToQueue();
         }
         public string pData()
         {
-            return this.name + "'s best move is " + this.bestMove + " and has " + this.health + " health.";
+            return this.pname + "'s best move is " + this.bestMove + " and has " + this.health + " health.";
         }
 
         public bool GenInfo()
         {
-            Console.WriteLine("It's " + this.name + "'s turn...");
-            Console.WriteLine("Press E to heal.");
-            Console.WriteLine("Press W to charge.");
+            dialogueSentence("It's " + this.pname + "'s turn...");
+            dialogueSentence("Press E to heal.");
+            dialogueSentence("Press W to charge.");
             if(this.moveSlots > 0)
             {
-                Console.WriteLine("Press Q to use " + this.bestMove + "(" + this.moveSlots + ")");
+                dialogueSentence("Press Q to use " + this.bestMove + "(" + this.moveSlots + ")");
                 return true;
             }
             else
             {
-                Console.WriteLine("Cannot attack, " + this.bestMove + "(" + this.moveSlots + ")");
+                dialogueSentence("Cannot attack, " + this.bestMove + "(" + this.moveSlots + ")");
                 return false;
             }
         }
@@ -54,23 +54,23 @@ namespace Characters
             if (this.moveSlots > 0)
             {
                 this.moveSlots--;
-                Console.WriteLine(this.name + " uses " + this.bestMove + "(" + this.moveSlots + ")");
+                dialogueSentence(this.pname + " uses " + this.bestMove + "(" + this.moveSlots + ")");
                 
 
             }else{
-                Console.WriteLine(this.name + " is out of moves...");
+                dialogueSentence(this.pname + " is out of moves...");
                 //Trying to figure out how to return the MoveSet function
             }
             
             enemy.health -= attckDmg;
             if(enemy.health > 0)
             {
-                Console.WriteLine(enemy.name + " lost " + this.attckDmg + " health.");
-                Console.WriteLine(enemy.name + " now has " + enemy.health + " health.");
+                dialogueSentence(enemy.pname + " lost " + this.attckDmg + " health.");
+                dialogueSentence(enemy.pname + " now has " + enemy.health + " health.");
                 
             }else{
-                Console.WriteLine(enemy.name + " has died.");
-                //Console.WriteLine("Game Over.");
+                dialogueSentence(enemy.pname + " has died.");
+                //dialogueSentence("Game Over.");
                 return;
             }
         }
@@ -78,7 +78,7 @@ namespace Characters
         public void Charge()
         {
             this.moveSlots++;
-            Console.WriteLine(this.name + " added one " + this.bestMove + "(" + this.moveSlots + ")");
+            dialogueSentence(this.pname + " added one " + this.bestMove + "(" + this.moveSlots + ")");
         }
 
         public void AddHealth()
@@ -87,24 +87,24 @@ namespace Characters
             
             if(ahealth < maxHealth)
             {
-                Console.WriteLine(this.name + " gains 20 health.");
+                dialogueSentence(this.pname + " gains 20 health.");
 
-                Console.WriteLine(this.name + " now has " + this.health + " health.");
+                dialogueSentence(this.pname + " now has " + this.health + " health.");
             }
 
             if (ahealth >= maxHealth)
             {
                 health = maxHealth;
-                Console.WriteLine("Your player has full health.");
+                dialogueSentence("Your player has full health.");
             }   
         } 
 
     }
     public class Streamer : Person
     {
-        public Streamer(string _name, string _bestMove, int _attckDmg, int _health, string _type)
+        public Streamer(string _pname, string _bestMove, int _attckDmg, int _health, string _type)
         {
-            name = _name;
+            pname = _pname;
             bestMove = _bestMove;
             health = _health;
             maxHealth = _health;
@@ -121,9 +121,9 @@ namespace Characters
     public class Soccer : Person
     {
 
-        public Soccer(string _name, string _bestMove, int _attckDmg, int _health, string _type)
+        public Soccer(string _pname, string _bestMove, int _attckDmg, int _health, string _type)
         {
-            name = _name;
+            pname = _pname;
             bestMove = _bestMove;
             health = _health;
             maxHealth = _health;
@@ -140,9 +140,9 @@ namespace Characters
 
     public class Basketball : Person
     {
-        public Basketball(string _name, string _bestMove, int _attckDmg, int _health, string _type)
+        public Basketball(string _pname, string _bestMove, int _attckDmg, int _health, string _type)
         {
-            name = _name;
+            pname = _pname;
             bestMove = _bestMove;
             health = _health;
             maxHealth = _health;
@@ -159,9 +159,9 @@ namespace Characters
 
     public class Rapper : Person
     {
-        public Rapper(string _name, string _bestMove, int _attckDmg, int _health, string _type)
+        public Rapper(string _pname, string _bestMove, int _attckDmg, int _health, string _type)
         {
-            name = _name;
+            pname = _pname;
             bestMove = _bestMove;
             health = _health;
             maxHealth = _health;

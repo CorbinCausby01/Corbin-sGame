@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using PokeReal;
+
 
 namespace DialogueManager
 {
@@ -19,9 +20,15 @@ namespace DialogueManager
         void Start()
         {
             sentences = new Queue<string>();
+            
+            foreach(string obj in sentences)
+            {
+               FindObjectOfType<Dialogue>().NewSentences(obj);
+            }
+            
         }
 
-        public void StartDialogue(program dialogue)
+        public void StartDialogue(Dialogue dialogue)
         {
 
             animator.SetBool("IsOpen", true);
@@ -31,7 +38,7 @@ namespace DialogueManager
 
             sentences.Clear();
 
-            foreach(string sentence in dialogue.sentences.Split(new[]{ '\n'}))
+            foreach(string sentence in dialogue.sentences)
             {
                 sentences.Enqueue(sentence);
             }
@@ -67,11 +74,13 @@ namespace DialogueManager
         {
             animator.SetBool("IsOpen", false);
         }
-        string sentence;
-        public void AddSentenceToQueue()
+    
+        public void AddSentenceToQueue(string sentence)
         {
-            
+            //CharacterDialogue.text = dialogue.sentences;
+            sentences.Clear();
             sentences.Enqueue(sentence);
+            
         }
     }
 }

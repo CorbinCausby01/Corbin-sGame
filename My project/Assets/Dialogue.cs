@@ -1,12 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DialogueManager;
 
 [System.Serializable]
-public class Dialogue
+public class Dialogue : DialogueManger 
 {
-    public string name;
+  
+  
 
-    [TextArea(3, 10)]
-    public string[] sentences;
+  public void NewSentences(string s)
+  {
+    //AddSentenceToQueue(DialogueName.text = "Kai Cenat");
+    //return Convert.ToString(AddSentenceToQueue(CharacterDialogue.text = "Hello World!"));
+    //return Convert.ToString(AddSentenceToQueue(CharacterDialogue.text = "Does this work?"));
+    AddSentenceToQueue(CharacterDialogue.text = "Does this work?"); 
+    AddSentenceToQueue(CharacterDialogue.text = "How about now?");
+    
+  }
+    
 }

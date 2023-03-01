@@ -9,7 +9,8 @@ using DialogueManager;
 
 namespace PokeReal
 {
-    public class program : Person
+    [System.Serializable]
+    public class Program : Person
     {
         void Main(string[] args)
         {
@@ -44,7 +45,7 @@ namespace PokeReal
             enemyList.Add(lj);
             enemyList.Add(drake);
 
-            //Dialogue dialogue1 = new Dialogue();
+            
             //StartDialogue(dialogue1);
             dialogueSentence("Welcome :)  \nChoose a player type... ");
             dialogueSentence("1. Rapper \n2. Streamer \n3. Basketball \n4. Soccer");
