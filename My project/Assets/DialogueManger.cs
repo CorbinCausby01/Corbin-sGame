@@ -21,8 +21,7 @@ namespace DialogueManager
         {
             sentences = new Queue<string>();
             FindObjectOfType<Dialogue>().NewSentences();
-            
-            
+            Debug.Log(sentences.Count);
         }
 
         public void StartDialogue(Dialogue dialogue)
@@ -32,8 +31,11 @@ namespace DialogueManager
 
 
             DialogueName.text = dialogue.name;
+            //dialogue.sentences = CharacterDialogue.text;
 
             sentences.Clear();
+
+            //FindObjectOfType<Dialogue>().NewSentences();
 
             foreach(string sentence in dialogue.sentences)
             {
@@ -74,10 +76,7 @@ namespace DialogueManager
     
         public void AddSentenceToQueue(string sentence)
         {
-            //CharacterDialogue.text = dialogue.sentences;
-            sentences.Clear();
-            sentences.Enqueue(sentence);
-            
+            sentences.Enqueue(CharacterDialogue.text = sentence);
         }
     }
 }
