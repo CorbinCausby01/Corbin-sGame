@@ -20,28 +20,21 @@ namespace DialogueManager
         void Start()
         {
             sentences = new Queue<string>();
-            FindObjectOfType<Dialogue>().NewSentences();
-            Debug.Log(sentences.Count);
         }
 
         public void StartDialogue(Dialogue dialogue)
         {
+            Debug.Log(sentences.Count);
 
             animator.SetBool("IsOpen", true);
 
-
             DialogueName.text = dialogue.name;
-            //dialogue.sentences = CharacterDialogue.text;
 
             sentences.Clear();
 
-            //FindObjectOfType<Dialogue>().NewSentences();
+            FindObjectOfType<Dialogue>().NewSentences();
 
-            foreach(string sentence in dialogue.sentences)
-            {
-                sentences.Enqueue(sentence);
-            }
-
+            DisplayNextSentence();
 
         }
 
