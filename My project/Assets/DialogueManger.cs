@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using PokeReal;
 
 
 namespace DialogueManager
@@ -22,13 +23,13 @@ namespace DialogueManager
             sentences = new Queue<string>();
         }
 
-        public void StartDialogue(Dialogue dialogue)
+        public void StartDialogue(Program dialogue)
         {
             Debug.Log(sentences.Count);
 
             animator.SetBool("IsOpen", true);
 
-            DialogueName.text = dialogue.name;
+            DialogueName.text = dialogue.nameofdialogue;
 
             sentences.Clear();
 

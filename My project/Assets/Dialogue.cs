@@ -7,11 +7,13 @@ using DialogueManager;
 public class Dialogue : DialogueManger 
 {
 
+  public string nameofdialogue;
+
   public void NewSentences()
   {
     AddSentenceToQueue("Hello World.");
     AddSentenceToQueue("How about now?");
-    
+
   }
     
 }

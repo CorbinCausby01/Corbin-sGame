@@ -9,10 +9,11 @@ using DialogueManager;
 
 namespace PokeReal
 {
-    [System.Serializable]
     public class Program : Person
     {
-        void Main(string[] args)
+        public string nameofdialogue;
+
+        private void Start()
         {
             bool _kai = false;
             bool _drake = false;
@@ -47,71 +48,71 @@ namespace PokeReal
 
             
             //StartDialogue(dialogue1);
-            dialogueSentence("Welcome :)  \nChoose a player type... ");
-            dialogueSentence("1. Rapper \n2. Streamer \n3. Basketball \n4. Soccer");
-            dialogueSentence("Type the number of type to submit...");
+            FindObjectOfType<Person>().dialogueSentence("Welcome :)  \nChoose a player type... ");
+            FindObjectOfType<Person>().dialogueSentence("1. Rapper \n2. Streamer \n3. Basketball \n4. Soccer");
+            FindObjectOfType<Person>().dialogueSentence("Type the number of type to submit...");
 
             if(Input.GetKey("1"))
             {
-                dialogueSentence("Playable Characters: ");
+                FindObjectOfType<Person>().dialogueSentence("Playable Characters: ");
                 foreach(Person pers in streamerList)
                 {  
-                    dialogueSentence(pers.pData());
+                    FindObjectOfType<Person>().dialogueSentence(pData(pers));
                 }
             }else if(Input.GetKey("2"))
             {
-                dialogueSentence("Playable Characters: ");
+                FindObjectOfType<Person>().dialogueSentence("Playable Characters: ");
                 foreach(Person pers in soccerList)
                 {  
-                    dialogueSentence(pers.pData());
+                    FindObjectOfType<Person>().dialogueSentence(pData(pers));
                 }
             }else if(Input.GetKey("3"))
             {
-                dialogueSentence("Playable Characters: ");
+                FindObjectOfType<Person>().dialogueSentence("Playable Characters: ");
                 foreach(Person pers in basketballList)
                 {  
-                    dialogueSentence(pers.pData());
+                    FindObjectOfType<Person>().dialogueSentence(pData(pers));
                 }
             }else if(Input.GetKey("4"))
             {
-                dialogueSentence("Playable Characters: ");
+                FindObjectOfType<Person>().dialogueSentence("Playable Characters: ");
                 foreach(Person pers in rapperList)
                 {  
-                    dialogueSentence(pers.pData());
+                    FindObjectOfType<Person>().dialogueSentence(pData(pers));
                 }
             }
             
 
-            dialogueSentence("Type the number of the player you want to choose...");  
+            FindObjectOfType<Person>().dialogueSentence("Type the number of the player you want to choose...");  
             if (Input.GetKey("1"))
             {
                 _lj = true;
-                dialogueSentence(lj.pData());
+                FindObjectOfType<Person>().dialogueSentence(pData(lj));
                 enemyList.Remove(lj);     
             }else if(Input.GetKey("2"))
             {
                 _cr = true;
-                dialogueSentence(cr.pData());
+                FindObjectOfType<Person>().dialogueSentence(pData(cr));
                 enemyList.Remove(cr);
             }else if(Input.GetKey("3"))
             {
                 _kai = true;
-                dialogueSentence(kai.pData());
+                FindObjectOfType<Person>().dialogueSentence(pData(kai));
                 enemyList.Remove(kai);
             }else if(Input.GetKey("4"))
             {
                 _drake = true;
-                dialogueSentence(drake.pData());
+                FindObjectOfType<Person>().dialogueSentence(pData(drake));
                 enemyList.Remove(drake);
             }
         
 
             var enemy = random.Next(enemyList.Count);
             var _enemy = enemyList[enemy];
-            dialogueSentence("--------------");
-            dialogueSentence("A random player will be your enemy. Enemy cannot be the player you chose.");
-            dialogueSentence(enemyList[enemy].pData());
-            dialogueSentence("--------------");
+            FindObjectOfType<Person>().dialogueSentence("--------------");
+            FindObjectOfType<Person>().dialogueSentence("A random player will be your enemy. Enemy cannot be the player you chose.");
+            FindObjectOfType<Person>().dialogueSentence(pData(enemyList[enemy]));
+            FindObjectOfType<Person>().dialogueSentence("--------------");
 
             while(lj.health > 0 && cr.health > 0 && kai.health > 0 && drake.health > 0 && _enemy.health > 0)
             {
@@ -180,9 +181,9 @@ namespace PokeReal
             }
         }
 
-        bool MoveSet(Person p, Person enemy1)
+        bool MoveSet(Person p, Person enemy)
         {
-            if(p.health <= 0 || enemy1.health <= 0)
+            if(p.health <= 0 || enemy.health <= 0)
             {
                 return false;
             }
@@ -190,38 +191,114 @@ namespace PokeReal
             bool validInput = false;
             if(!validInput)
             {
-                validInput = p.GenInfo();
+                validInput = GenInfo(p);
             }
                 
                 
             if(Input.GetKey("q") && validInput)
             {
                     
-                p.HitPerson(enemy1);
+                HitPerson(p);
+                EnemyHit(enemy);
                 return true;
             }
             else if(Input.GetKey("q") && !validInput)
             {
-                dialogueSentence("Not a valid input.");
+                FindObjectOfType<Person>().dialogueSentence("Not a valid input.");
                 return false;
             }
             else if(Input.GetKey("w"))
             {
-                p.Charge();
+                Charge(p);
                 return true;
             }
             else if(Input.GetKey("e"))
             {
-                p.AddHealth();
+                AddHealth(p);
                 return true;
             }
             else
             {
-                dialogueSentence("Not a valid input.");
+                FindObjectOfType<Person>().dialogueSentence("Not a valid input.");
                 return false;
                 
             }
         }
+
+        public string pData(Person person)
+        {
+            return person.pname + "'s best move is " + person.bestMove + " and has " + person.health + " health.";
+        }
+
+        public bool GenInfo(Person person)
+        {
+            FindObjectOfType<Person>().dialogueSentence("It's " + this.pname + "'s turn...");
+            FindObjectOfType<Person>().dialogueSentence("Press E to heal.");
+            FindObjectOfType<Person>().dialogueSentence("Press W to charge.");
+            if(this.moveSlots > 0)
+            {
+                FindObjectOfType<Person>().dialogueSentence("Press Q to use " + this.bestMove + "(" + this.moveSlots + ")");
+                return true;
+            }
+            else
+            {
+                FindObjectOfType<Person>().dialogueSentence("Cannot attack, " + this.bestMove + "(" + this.moveSlots + ")");
+                return false;
+            }
+        }
+
+        public void HitPerson(Person person)
+        {
+            if (this.moveSlots > 0)
+            {
+                this.moveSlots--;
+                FindObjectOfType<Person>().dialogueSentence(this.pname + " uses " + this.bestMove + "(" + this.moveSlots + ")");
+                
+
+            }else{
+                FindObjectOfType<Person>().dialogueSentence(this.pname + " is out of moves...");
+                //Trying to figure out how to return the MoveSet function
+            } 
+        }
+
+        public void EnemyHit(Person enemy)
+        {
+            enemy.health -= attckDmg;
+            if(enemy.health > 0)
+            {
+                FindObjectOfType<Person>().dialogueSentence(enemy.pname + " lost " + this.attckDmg + " health.");
+                FindObjectOfType<Person>().dialogueSentence(enemy.pname + " now has " + enemy.health + " health.");
+                
+            }else{
+                FindObjectOfType<Person>().dialogueSentence(enemy.pname + " has died.");
+                //FindObjectOfType<Person>().dialogueSentence("Game Over.");
+                return;
+            }
+        }
+
+        public void Charge(Person person)
+        {
+            this.moveSlots++;
+            FindObjectOfType<Person>().dialogueSentence(this.pname + " added one " + this.bestMove + "(" + this.moveSlots + ")");
+        }
+
+        public void AddHealth(Person person)
+        {
+            int ahealth = health += 20;
+            
+            if(ahealth < maxHealth)
+            {
+                FindObjectOfType<Person>().dialogueSentence(this.pname + " gains 20 health.");
+
+                FindObjectOfType<Person>().dialogueSentence(this.pname + " now has " + this.health + " health.");
+            }
+
+            if (ahealth >= maxHealth)
+            {
+                health = maxHealth;
+                FindObjectOfType<Person>().dialogueSentence("Your player has full health.");
+            }   
+        } 
     }
 }   
 

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DialogueManager;
+using PokeReal;
 
 
 namespace DialogueTrigger
 {
     public class DialogueTrigger : MonoBehaviour
     {
-        public Dialogue dialogue;
+        public Program dialogue;
 
         public void TriggerDialogue()
         {
