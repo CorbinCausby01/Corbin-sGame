@@ -52,7 +52,7 @@ namespace DialogueManager
 
             string sentence = sentences.Dequeue();
             StopAllCoroutines();
-            StartCoroutine(TypeSentence(sentences[i]));  
+            StartCoroutine(TypeSentence(sentence));  
         }
 
         IEnumerator TypeSentence (string sentence)
