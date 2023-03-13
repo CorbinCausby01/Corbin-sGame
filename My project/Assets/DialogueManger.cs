@@ -21,10 +21,12 @@ namespace DialogueManager
         void Start()
         {
             sentences = new Queue<string>();
+            
         }
 
         public void StartDialogue(Program dialogue)
         {
+            
             Debug.Log(sentences.Count);
 
             animator.SetBool("IsOpen", true);
@@ -32,9 +34,9 @@ namespace DialogueManager
             DialogueName.text = dialogue.nameofdialogue;
 
             sentences.Clear();
-
-            FindObjectOfType<Dialogue>().NewSentences();
-
+            
+            FindObjectOfType<Program>().Testing();
+            
             DisplayNextSentence();
 
         }
@@ -46,7 +48,6 @@ namespace DialogueManager
                 EndDialogue();
                 return;
             }
-
             string sentence = sentences.Dequeue();
             StopAllCoroutines();
             StartCoroutine(TypeSentence(sentence));
@@ -68,9 +69,10 @@ namespace DialogueManager
             animator.SetBool("IsOpen", false);
         }
     
-        public void AddSentenceToQueue(string sentence)
+        public void AddSentenceToQueue(string sentence1)
         {
-            sentences.Enqueue(CharacterDialogue.text = sentence);
+            CharacterDialogue.text = sentence1;
+            sentences.Enqueue(sentence1);
         }
     }
 }

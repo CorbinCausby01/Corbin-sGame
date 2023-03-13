@@ -11,9 +11,8 @@ public class Dialogue : DialogueManger
 
   public void NewSentences()
   {
-    AddSentenceToQueue("Hello World.");
-    AddSentenceToQueue("How about now?");
-
+    //AddSentenceToQueue("Hello World.");
+    //AddSentenceToQueue("How about now?");
   }
     
 }

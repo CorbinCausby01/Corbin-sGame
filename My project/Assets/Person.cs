@@ -19,13 +19,13 @@ namespace Characters
         public int maxHealth;
         public int attckDmg;
         public string type;
-        public string sentences;
+        //public string sentences;
 
        
-        public void dialogueSentence(string sentences)
-        {
-            FindObjectOfType<DialogueManger>().AddSentenceToQueue(sentences);
-        }
+        //public void dialogueSentence(string sentence)
+        //{
+            //FindObjectOfType<DialogueManger>().AddSentenceToQueue(sentence);
+        //}
         
 
     }
