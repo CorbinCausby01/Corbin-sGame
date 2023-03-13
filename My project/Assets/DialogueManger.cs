@@ -27,16 +27,16 @@ namespace DialogueManager
         public void StartDialogue(Program dialogue)
         {
             
-            Debug.Log(sentences.Count);
+            //Debug.Log(sentences.Count);
 
             animator.SetBool("IsOpen", true);
 
             DialogueName.text = dialogue.nameofdialogue;
 
-            sentences.Clear();
+            //sentences.Clear();
             
             FindObjectOfType<Program>().Testing();
-            
+
             DisplayNextSentence();
 
         }
@@ -48,9 +48,11 @@ namespace DialogueManager
                 EndDialogue();
                 return;
             }
+
+
             string sentence = sentences.Dequeue();
             StopAllCoroutines();
-            StartCoroutine(TypeSentence(sentence));
+            StartCoroutine(TypeSentence(sentences[i]));  
         }
 
         IEnumerator TypeSentence (string sentence)
