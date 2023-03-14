@@ -3,39 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using PokeReal;
+using Ink.Runtime;
+
 
 
 namespace DialogueManager
 {
     public class DialogueManger : MonoBehaviour
     {
+        
+        [Header("Ink JSON")]
+        [SerializeField] private TextAsset inkJSON;
+
+        [Header("Dialogue UI")]
+        [SerializeField] private GameObject dialoguePanel;
+        [SerializeField] public TextMeshProUGUI dialogueText;
+
+        private Story currentStory;
 
         public TextMeshProUGUI DialogueName;
-        public TextMeshProUGUI CharacterDialogue;
         public Animator animator;
 
-        private Queue<string> sentences;
+        private static DialogueManger instance;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            sentences = new Queue<string>();
-            
+            instance = this;
         }
 
-        public void StartDialogue(Program dialogue)
+        //private void Update()
+        //{
+            //if (InputManager.GetInstance().GetSubmitPressed())
+            //{
+                //DisplayNextSentence();
+            //}
+        //}
+
+        public static DialogueManger GetInstance()
         {
-            
-            //Debug.Log(sentences.Count);
+            if (instance != null)
+            {
+                Debug.LogWarning("Found more than one dialoguemanager in the scene.");
+            }
+            return instance;
+        }
+
+        public void StartDialogue(TextAsset inkJSON)
+        {
+
+            Debug.Log(inkJSON.text);
+
+            currentStory = new Story(inkJSON.text);
 
             animator.SetBool("IsOpen", true);
-
-            DialogueName.text = dialogue.nameofdialogue;
-
-            //sentences.Clear();
-            
-            FindObjectOfType<Program>().Testing();
 
             DisplayNextSentence();
 
@@ -43,24 +64,24 @@ namespace DialogueManager
 
         public void DisplayNextSentence()
         {
-            if(sentences.Count == 0)
+            if(currentStory.canContinue)
+            {
+                dialogueText.text = currentStory.Continue();
+            }
+            else
             {
                 EndDialogue();
                 return;
             }
-
-
-            string sentence = sentences.Dequeue();
-            StopAllCoroutines();
-            StartCoroutine(TypeSentence(sentence));  
+              
         }
 
         IEnumerator TypeSentence (string sentence)
         {
-            CharacterDialogue.text = "";
+            dialogueText.text = "";
             foreach (char letter in sentence.ToCharArray())
             {
-                CharacterDialogue.text += letter;
+                dialogueText.text += letter;
                 yield return null;
             }
 
@@ -69,12 +90,6 @@ namespace DialogueManager
         public void EndDialogue()
         {
             animator.SetBool("IsOpen", false);
-        }
-    
-        public void AddSentenceToQueue(string sentence1)
-        {
-            CharacterDialogue.text = sentence1;
-            sentences.Enqueue(sentence1);
         }
     }
 }

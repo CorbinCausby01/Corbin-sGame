@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DialogueManager;
-using PokeReal;
+
 
 
 namespace DialogueTrigger
 {
     public class DialogueTrigger : MonoBehaviour
     {
-        public Program dialogue;
+        [Header("Ink JSON")]
+        [SerializeField] private TextAsset inkJSON;
 
         public void TriggerDialogue()
         {
-            FindObjectOfType<DialogueManger>().StartDialogue(dialogue);
+            FindObjectOfType<DialogueManger>().StartDialogue(inkJSON);
         }
     }
 }
